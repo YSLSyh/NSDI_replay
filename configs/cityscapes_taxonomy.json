@@ -1,0 +1,24 @@
+{
+  "source": "Cityscapes semantic classes, used as retrieval vocabulary rather than manually annotated images",
+  "entries": [
+    {"name":"road","description":"road surface used by vehicles"},
+    {"name":"sidewalk","description":"sidewalk beside the road"},
+    {"name":"building","description":"building along an urban street"},
+    {"name":"wall","description":"wall in an urban scene"},
+    {"name":"fence","description":"fence in an urban scene"},
+    {"name":"pole","description":"pole beside or above the road"},
+    {"name":"traffic light","description":"traffic light controlling road users"},
+    {"name":"traffic sign","description":"road or traffic sign"},
+    {"name":"vegetation","description":"trees and other roadside vegetation"},
+    {"name":"terrain","description":"ground or terrain outside the roadway"},
+    {"name":"sky","description":"sky above the street"},
+    {"name":"person","description":"pedestrian or person in a street scene"},
+    {"name":"rider","description":"person riding a bicycle or motorcycle"},
+    {"name":"car","description":"passenger car on the road"},
+    {"name":"truck","description":"truck on the road"},
+    {"name":"bus","description":"bus on the road"},
+    {"name":"train","description":"train or tram in a street scene"},
+    {"name":"motorcycle","description":"motorcycle on the road"},
+    {"name":"bicycle","description":"bicycle on the road"}
+  ]
+}

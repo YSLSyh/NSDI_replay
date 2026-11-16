@@ -1,0 +1,31 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.log
+.env
+.env.*
+
+# 数据集、权重、训练缓存和外部仓库只保留在本机/服务器。
+data/
+models/
+assets/
+artifacts/
+runs/
+third_party/
+tmp/
+
+# 避免误传放在其他目录的大文件或凭据。
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.onnx
+*.pkl
+*.bin
+*.zip
+*.tar
+*.tar.gz
+*.tar.xz
+*.key
+*.pem

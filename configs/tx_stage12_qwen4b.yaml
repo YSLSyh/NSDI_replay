@@ -1,0 +1,153 @@
+project: replay
+models_lock_file: artifacts/models_tx_qwen4b.lock.json
+seed: 2026
+# 以下未由论文直接给出：种子、具体权重版本、块大小、JPEG 参数、UNet 层表和训练轮数。
+# 未公开的工程选择在本配置、入口参数及 results/reports 中记录。
+device: cuda
+task:
+  description: autonomous driving
+  bin_min: 4
+  bin_max: 8
+  bin_cache: artifacts/semantic_bins_qwen4b_cityscapes_4to8.json
+  # 四个核心任务类别必须由模型提出；其余类别从官方 Cityscapes 可评测的道路使用者中选择。
+  # 最终保留 4–8 类，同义词只归一，不由程序补造模型未提出的类别。
+  required_bins: [car, pedestrian, traffic light, traffic sign]
+  allowed_bins: [car, pedestrian, traffic light, traffic sign, rider, train, motorcycle, bicycle]
+  bin_aliases:
+    cars: car
+    automobile: car
+    automobiles: car
+    motorcar: car
+    motorcars: car
+    van: car
+    vans: car
+    truck: car
+    trucks: car
+    bus: car
+    buses: car
+    riders: rider
+    motorbike: motorcycle
+    motorbikes: motorcycle
+    motorcycles: motorcycle
+    bike: bicycle
+    bikes: bicycle
+    bicycles: bicycle
+    trains: train
+    person: pedestrian
+    people: pedestrian
+    persons: pedestrian
+    pedestrians: pedestrian
+    stoplight: traffic light
+    stoplights: traffic light
+    stop light: traffic light
+    stop lights: traffic light
+    traffic signal: traffic light
+    traffic signals: traffic light
+    traffic lights: traffic light
+    road sign: traffic sign
+    road signs: traffic sign
+    street sign: traffic sign
+    street signs: traffic sign
+    traffic signs: traffic sign
+  taxonomy: configs/cityscapes_taxonomy.json
+models:
+  clip:
+    repo: openai/clip-vit-base-patch16
+    revision: 57c216476eefef5ab752ec549e440a49ae4ae5f3
+    path: models/clip-vit-b16
+    # 作者未公开逐 patch 投影位置；在 COCO/FSS 验证集比较两个候选。
+    patch_projection: post_layernorm
+  clipseg:
+    repo: CIDAS/clipseg-rd64-refined
+    revision: 999e0328d9e10b484360c477313983f9afdd7050
+    path: models/clipseg-rd64-refined
+  qwen:
+    repo: Qwen/Qwen3-4B
+    revision: 1cfa9a7208912126459214e8b04321603b3df60c
+    path: models/qwen3-4b
+  segmenter:
+    repo: nvidia/segformer-b5-finetuned-cityscapes-1024-1024
+    revision: 2c6f153e4c23c229e2fa2b188eb250607e030cd8
+    path: models/segformer-b5-cityscapes
+data:
+  coco2014_root: data/raw/coco2014
+  coco_exploratory_fold: 0
+  fss1000_root: data/raw/fss1000
+  fss_train_classes: data/splits/fss1000_train.txt
+  fss_val_classes: data/splits/fss1000_val.txt
+  fss_test_classes: data/splits/fss1000_test.txt
+  cityscapes_root: data/raw/cityscapes
+  train_manifest: data/manifests/restoration_train.jsonl
+  val_manifest: data/manifests/restoration_val.jsonl
+  reference_manifest: data/manifests/cityscapes_reference_train.jsonl
+  tune_manifest: data/manifests/cityscapes_tune_train.jsonl
+  token_cache_dir: data/cache/clip_patch_tokens_fp32
+  kb_path: artifacts/posterior_kb_cityscapes_train
+  kb_full_path: artifacts/posterior_kb_with_cityscapes
+  # 四卡 BF16 完成 15 轮的已有权重；投影模式由 ReplayConfig 追加到文件名。
+  checkpoint: artifacts/receiver_pilot_fold0_bf16_15ep.pt
+image:
+  patch_size: 16
+  clipseg_tile: 352
+  clipseg_stride: 352
+  segformer_tile: 1024
+  segformer_stride: 768
+  # KDC 的 JPEG quality 未公开；75 仅作本轮工程试跑值，不冒充论文 KDC 参数。
+  jpeg_quality: 75
+  jpeg_subsampling: 0
+importance:
+  # 论文 Sec. 3.1.2：T_attn = 0.07；图 17 的 27% 是测量结果，不是输入参数。
+  temperature: 0.07
+  region_probability: 0.5
+  # 论文图 3 用 person，正文用 pedestrian；语义桶仍保留 pedestrian。
+  clipseg_query_aliases:
+    pedestrian: person
+  # car 是本任务统一的车辆语义桶；区域候选和区域文本比较都覆盖这些车种。
+  visual_query_groups:
+    car: [car, truck, van, bus]
+  balance_visual_queries: true
+  # 以下区域融合细节论文未公开：让有强响应的车辆别名扩展候选区域。
+  visual_alias_relative_threshold: 0.5
+  visual_alias_min_probability: 0.3
+  visual_alias_min_peak: 0.6
+  # 连通区域提取细节未公开；仅过滤小于 16 像素的噪声候选。
+  region_min_pixels: 16
+  exploratory_token_keep_fraction: 0.27
+  # 以下预量化参数论文未公开，是待按实际码率和下游任务指标调优的项目初值。
+  dct_high_frequency_cutoff: 2
+  prequant_luma_strength: 2.0
+  prequant_chroma_strength: 2.0
+  prequant_gamma: 1.0
+  importance_ratio_low: 1.0
+  importance_ratio_high: 4.0
+knowledge:
+  rag_top_k: 32
+  # 项目选择：Qwen 仅检索场景类别定义，避免同一类别的参考图文字占满候选。
+  # 参考图像向量仍保留在 PosteriorKB 中供接收端使用；论文未公开来源过滤规则。
+  rag_sources: [taxonomy]
+  rx_top_k: 4
+  session_merge_cosine: 0.95
+receiver:
+  base_channels: 50
+  context_dim: 1024
+  dropout_min: 0.05
+  dropout_max: 0.15
+  batch_size: 1
+  epochs: 30
+  num_workers: 4
+  adam_lr: 0.001
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  min_lr: 0.00002
+  loss: l1
+evaluation:
+  # 30 KB 按十进制 30000 字节解释；论文未明确 KB 的计数约定。
+  figure8_budget_bytes: 30000
+tuning:
+  # 论文未公开扫描范围；以下仅用于项目的离线等码率调参。
+  # 30 KB 是本轮研究预算，不是生产场景的默认码率。
+  sender_budget_bytes: 30000
+  sender_luma_strengths: [0.0, 2.0, 4.0]
+  sender_chroma_strengths: [0.0, 2.0]
+  sender_dct_cutoffs: [2, 4]
+  sender_importance_ratio_highs: [4.0, 8.0]

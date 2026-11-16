@@ -1,0 +1,377 @@
+{
+  "protocol": "figure7_cross_class_300_curves_v1",
+  "pilot_only": true,
+  "n_images": 300,
+  "distinct_wnids": 300,
+  "loss_rates": [
+    0.03,
+    0.075,
+    0.12
+  ],
+  "budgets_bytes": [
+    5000,
+    10000,
+    20000,
+    30000
+  ],
+  "budget_axis_loss_rate": 0.05,
+  "loss_axis_fixed_kdc_limitnet_budget_bytes": 30000,
+  "loss_axis_common_byte_cap": false,
+  "intact": {
+    "top1": 0.9033333333333333,
+    "hits": 271,
+    "ci95": [
+      0.8646182980304887,
+      0.9318497051817106
+    ]
+  },
+  "methods_unavailable": [
+    "starfish"
+  ],
+  "starfish_reason": "No verifiable ImageNet pretrained checkpoint available",
+  "curves": {
+    "loss": {
+      "prog_jpeg": [
+        {
+          "x": 0.03,
+          "top1": 0.7733333333333333,
+          "hits": 232,
+          "n": 300,
+          "ci95": [
+            0.7226746795338672,
+            0.8170804961967142
+          ],
+          "mean_sent_bytes": 40820.97,
+          "decode_failures": 28,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 0.075,
+          "top1": 0.6466666666666666,
+          "hits": 194,
+          "n": 300,
+          "ci95": [
+            0.5910330291100347,
+            0.698591699330765
+          ],
+          "mean_sent_bytes": 40820.97,
+          "decode_failures": 62,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 0.12,
+          "top1": 0.5233333333333333,
+          "hits": 157,
+          "n": 300,
+          "ci95": [
+            0.466878323217167,
+            0.5791983381256874
+          ],
+          "mean_sent_bytes": 40820.97,
+          "decode_failures": 99,
+          "infeasible_budget": 0
+        }
+      ],
+      "limitnet": [
+        {
+          "x": 0.03,
+          "top1": 0.6033333333333334,
+          "hits": 181,
+          "n": 300,
+          "ci95": [
+            0.5470046178899679,
+            0.6570491680569592
+          ],
+          "mean_sent_bytes": 10808.926666666666,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 0.075,
+          "top1": 0.4766666666666667,
+          "hits": 143,
+          "n": 300,
+          "ci95": [
+            0.42080166187431245,
+            0.533121676782833
+          ],
+          "mean_sent_bytes": 10808.926666666666,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 0.12,
+          "top1": 0.34,
+          "hits": 102,
+          "n": 300,
+          "ci95": [
+            0.2887202040964927,
+            0.395325546695362
+          ],
+          "mean_sent_bytes": 10808.926666666666,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        }
+      ],
+      "kdc": [
+        {
+          "x": 0.03,
+          "top1": 0.87,
+          "hits": 261,
+          "n": 300,
+          "ci95": [
+            0.8272195707065882,
+            0.9034246305872476
+          ],
+          "mean_sent_bytes": 28945.866666666665,
+          "decode_failures": 0,
+          "infeasible_budget": 3
+        },
+        {
+          "x": 0.075,
+          "top1": 0.8666666666666667,
+          "hits": 260,
+          "n": 300,
+          "ci95": [
+            0.8235282379361116,
+            0.9005335831658879
+          ],
+          "mean_sent_bytes": 28945.866666666665,
+          "decode_failures": 0,
+          "infeasible_budget": 3
+        },
+        {
+          "x": 0.12,
+          "top1": 0.8566666666666667,
+          "hits": 257,
+          "n": 300,
+          "ci95": [
+            0.8124994228503402,
+            0.8918152576761502
+          ],
+          "mean_sent_bytes": 28945.866666666665,
+          "decode_failures": 0,
+          "infeasible_budget": 3
+        }
+      ]
+    },
+    "budget": {
+      "jpeg": [
+        {
+          "x": 5000,
+          "top1": 0.2733333333333333,
+          "hits": 82,
+          "n": 300,
+          "ci95": [
+            0.22600557283569578,
+            0.3263925741194317
+          ],
+          "mean_sent_bytes": 2708.8366666666666,
+          "decode_failures": 37,
+          "infeasible_budget": 132
+        },
+        {
+          "x": 10000,
+          "top1": 0.5233333333333333,
+          "hits": 157,
+          "n": 300,
+          "ci95": [
+            0.466878323217167,
+            0.5791983381256874
+          ],
+          "mean_sent_bytes": 9192.626666666667,
+          "decode_failures": 98,
+          "infeasible_budget": 14
+        },
+        {
+          "x": 20000,
+          "top1": 0.37333333333333335,
+          "hits": 112,
+          "n": 300,
+          "ci95": [
+            0.32052468559554903,
+            0.42934486711466924
+          ],
+          "mean_sent_bytes": 18975.603333333333,
+          "decode_failures": 163,
+          "infeasible_budget": 3
+        },
+        {
+          "x": 30000,
+          "top1": 0.2866666666666667,
+          "hits": 86,
+          "n": 300,
+          "ci95": [
+            0.23844603884969776,
+            0.3402816288727752
+          ],
+          "mean_sent_bytes": 26866.68666666667,
+          "decode_failures": 197,
+          "infeasible_budget": 3
+        }
+      ],
+      "prog_jpeg": [
+        {
+          "x": 5000,
+          "top1": 0.52,
+          "hits": 156,
+          "n": 300,
+          "ci95": [
+            0.4635710820137406,
+            0.5759231991372776
+          ],
+          "mean_sent_bytes": 4991.15,
+          "decode_failures": 61,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 10000,
+          "top1": 0.6633333333333333,
+          "hits": 199,
+          "n": 300,
+          "ci95": [
+            0.6080919973085686,
+            0.7144446320914131
+          ],
+          "mean_sent_bytes": 9933.553333333333,
+          "decode_failures": 40,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 20000,
+          "top1": 0.7066666666666667,
+          "hits": 212,
+          "n": 300,
+          "ci95": [
+            0.6527939127218992,
+            0.755313659171955
+          ],
+          "mean_sent_bytes": 19326.906666666666,
+          "decode_failures": 40,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 30000,
+          "top1": 0.6966666666666667,
+          "hits": 209,
+          "n": 300,
+          "ci95": [
+            0.642431561442127,
+            0.7459288698762181
+          ],
+          "mean_sent_bytes": 27013.706666666665,
+          "decode_failures": 40,
+          "infeasible_budget": 0
+        }
+      ],
+      "limitnet": [
+        {
+          "x": 5000,
+          "top1": 0.49333333333333335,
+          "hits": 148,
+          "n": 300,
+          "ci95": [
+            0.43720207035328285,
+            0.5496331692630444
+          ],
+          "mean_sent_bytes": 4726.466666666666,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 10000,
+          "top1": 0.5466666666666666,
+          "hits": 164,
+          "n": 300,
+          "ci95": [
+            0.49009847513929183,
+            0.6020548475464171
+          ],
+          "mean_sent_bytes": 9639.863333333333,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 20000,
+          "top1": 0.5333333333333333,
+          "hits": 160,
+          "n": 300,
+          "ci95": [
+            0.47681490758540607,
+            0.5890088943329576
+          ],
+          "mean_sent_bytes": 10808.926666666666,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        },
+        {
+          "x": 30000,
+          "top1": 0.5433333333333333,
+          "hits": 163,
+          "n": 300,
+          "ci95": [
+            0.48677384505565635,
+            0.5987970974382163
+          ],
+          "mean_sent_bytes": 10808.926666666666,
+          "decode_failures": 0,
+          "infeasible_budget": 0
+        }
+      ],
+      "kdc": [
+        {
+          "x": 5000,
+          "top1": 0.06666666666666667,
+          "hits": 20,
+          "n": 300,
+          "ci95": [
+            0.043567515545158274,
+            0.10072305951611496
+          ],
+          "mean_sent_bytes": 508.1066666666667,
+          "decode_failures": 0,
+          "infeasible_budget": 269
+        },
+        {
+          "x": 10000,
+          "top1": 0.77,
+          "hits": 231,
+          "n": 300,
+          "ci95": [
+            0.7191446136117753,
+            0.8140281819269698
+          ],
+          "mean_sent_bytes": 9166.283333333333,
+          "decode_failures": 0,
+          "infeasible_budget": 16
+        },
+        {
+          "x": 20000,
+          "top1": 0.8466666666666667,
+          "hits": 254,
+          "n": 300,
+          "ci95": [
+            0.8015339429418983,
+            0.8830335970090831
+          ],
+          "mean_sent_bytes": 19392.076666666668,
+          "decode_failures": 0,
+          "infeasible_budget": 3
+        },
+        {
+          "x": 30000,
+          "top1": 0.88,
+          "hits": 264,
+          "n": 300,
+          "ci95": [
+            0.8383421861729838,
+            0.912049155696361
+          ],
+          "mean_sent_bytes": 28945.866666666665,
+          "decode_failures": 0,
+          "infeasible_budget": 3
+        }
+      ]
+    }
+  }
+}
